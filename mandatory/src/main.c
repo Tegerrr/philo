@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timelkon <timelkon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 21:31:49 by timelkon          #+#    #+#             */
-/*   Updated: 2023/09/30 21:40:16 by timelkon         ###   ########.fr       */
+/*   Created: 2023/09/25 16:44:25 by timelkon          #+#    #+#             */
+/*   Updated: 2023/10/04 00:40:46 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	*parsing(char **argv)
+int main(int argc, char **argv)
 {
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (argv[i])
-	{
-		while (argv[j])
-		{
-			if (argv[j] >= '0' && argv[j] <= '9')
-				return (NULL);
-			j++;
-		}
-		i++;
-	}
-	return (1);
+	if (argc < 4 || argc > 5)
+		return (error(0));
+	philo(argv);
+	return (0);
 }
