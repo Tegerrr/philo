@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 21:31:49 by timelkon          #+#    #+#             */
-/*   Updated: 2023/10/04 17:52:29 by mac              ###   ########.fr       */
+/*   Updated: 2023/10/04 20:05:06 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 t_philo	*create_philos(char **argv, t_philo *philo)
 {
-	int	p_num;
-	int	n;
-	t_philo *temp;
+	int				p_num;
+	int				n;
+	t_philo 		*temp;
+	struct timeval	curtime;
+	long			intime;
 
 	n = 1;
 	philo = NULL;
+	if (gettimeofday(&curtime, NULL) == -1)
+		return (error(4), NULL);
+	intime = curtime.tv_sec * 1000;
 	p_num = ft_atoi(argv[1]);
 	if (p_num > 200)
 		return (error(2), NULL);
@@ -33,6 +38,7 @@ t_philo	*create_philos(char **argv, t_philo *philo)
 		temp->time_die = ft_atol(argv[2]) * 1000;
 		temp->time_eat = ft_atol(argv[3]) * 1000;
 		temp->time_sleep = ft_atol(argv[4]) * 1000;
+		temp->intime = intime;
 		if (argv[5])
 			temp->eat_time_num = ft_atol(argv[5]) * 1000;
 		else

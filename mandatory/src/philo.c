@@ -6,31 +6,36 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 21:11:56 by timelkon          #+#    #+#             */
-/*   Updated: 2023/10/04 18:18:00 by mac              ###   ########.fr       */
+/*   Updated: 2023/10/04 20:14:35 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	life_cicle(void)
+void	life_cicle(t_philo *philo)
 {
-	while ()
+	t_philo	*temp;
+
+	temp = philo;
+	while (1)
+	{
+		while (1)
+		{
+			if (philo)
+		}
+	}
 }
 
-int	life_prep(t_philo *philo, pthread_mutex_t mutex)
+int	life_prep(t_philo *philo)
 {
 	int				i;
 	long			intime;
 	long			since_ate;
-	struct timeval	curtime;
 	pthread_t		th[ft_lstsize(philo)];
 
 	i = 0;
-	if (gettimeofday(&curtime, NULL) == -1)
-		return (0);
-	intime = curtime.tv_sec * 1000;
 	while (th[i++])
-		pthread_create(th + 1, NULL, &life_cicle, NULL);
+		pthread_create(th + 1, NULL, &life_cicle, philo);
 	i = 0;
 	while (th[i++])
 		pthread_join(th[i], NULL);
@@ -41,14 +46,12 @@ int	philo(char	**argv)
 {
 	t_philo	philo;
 	t_philo	*true_philo;
-	pthread_mutex_t mutex;
-	
 
-	pthread_mutex_init(&mutex, NULL);
 	true_philo = parsing(argv, &philo);
+	pthread_mutex_init(&true_philo->mutex, NULL);
 	if (!true_philo)
 		return (0);
-	life_prep(true_philo, mutex);
+	life_prep(true_philo);
 	// int i = 0;
 	// t_philo *temp = true_philo;
 	// while (temp)
@@ -62,5 +65,5 @@ int	philo(char	**argv)
 	// 	printf("------------------\n");
 	// 	temp = temp->next;
 	// }
-	pthread_mutex_destroy(&mutex);
+	pthread_mutex_destroy(&true_philo->mutex);
 }

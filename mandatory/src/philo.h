@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:47:32 by timelkon          #+#    #+#             */
-/*   Updated: 2023/10/04 17:50:58 by mac              ###   ########.fr       */
+/*   Updated: 2023/10/04 20:13:21 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@
 
 typedef struct s_philo
 {
-	int		philo_num;
-	int		fork;
-	long	time_die;
-	long 	time_eat;
-	long	time_sleep;
-	long	eat_time_num;
+	int				philo_num;
+	int				fork;
+	long			time_die;
+	long 			time_eat;
+	long			time_sleep;
+	long			eat_time_num;
+	long			intime;
+	pthread_mutex_t mutex;
 	struct s_philo	*next;
 }	t_philo;
 
