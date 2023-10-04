@@ -6,17 +6,17 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 18:46:37 by mac               #+#    #+#             */
-/*   Updated: 2023/10/04 00:15:37 by mac              ###   ########.fr       */
+/*   Updated: 2023/10/04 17:50:38 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
 	int		i;
 	int		znak;
-	size_t	res;
+	long	res;
 
 	i = 0;
 	znak = 1;
@@ -92,4 +92,20 @@ void	ft_bzero(void *s, size_t n)
 		a = 0;
 	}
 	return ;
+}
+
+int	ft_lstsize(t_philo *lst)
+
+{
+	int	a;
+
+	a = 0;
+	lst = lst -> next;
+	a++;
+	while (lst && lst->philo_num != 1)
+	{
+		lst = lst -> next;
+		a++;
+	}
+	return (a);
 }
