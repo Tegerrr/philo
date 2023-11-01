@@ -6,17 +6,17 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 18:46:37 by mac               #+#    #+#             */
-/*   Updated: 2023/10/04 17:50:38 by mac              ###   ########.fr       */
+/*   Updated: 2023/10/30 18:56:13 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *str)
+long long	ft_atol(const char *str)
 {
-	int		i;
-	int		znak;
-	long	res;
+	int			i;
+	int			znak;
+	long long	res;
 
 	i = 0;
 	znak = 1;
@@ -38,24 +38,24 @@ long	ft_atol(const char *str)
 	return (znak * res);
 }
 
-void	ft_lstadd_back(t_philo **lst, t_philo *new)
-{
-	t_philo	*a;
+// void	ft_lstadd_back(t_philo **lst, t_philo *new)
+// {
+// 	t_philo	*a;
 
-	a = (*lst);
-	if (lst)
-	{
-		if (*lst == NULL)
-		{
-			*lst = new;
-			(*lst)->next = NULL;
-			return ;
-		}
-		while (a -> next != NULL)
-			a = a -> next;
-		a -> next = new;
-	}
-}
+// 	a = (*lst);
+// 	if (lst)
+// 	{
+// 		if (*lst == NULL)
+// 		{
+// 			*lst = new;
+// 			(*lst)->next = NULL;
+// 			return ;
+// 		}
+// 		while (a -> next != NULL)
+// 			a = a -> next;
+// 		a -> next = new;
+// 	}
+// }
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -94,18 +94,18 @@ void	ft_bzero(void *s, size_t n)
 	return ;
 }
 
-int	ft_lstsize(t_philo *lst)
+// int	ft_lstsize(t_philo *lst)
 
-{
-	int	a;
+// {
+// 	int	a;
 
-	a = 0;
-	lst = lst -> next;
-	a++;
-	while (lst && lst->philo_num != 1)
-	{
-		lst = lst -> next;
-		a++;
-	}
-	return (a);
-}
+// 	a = 0;
+// 	lst = lst -> next;
+// 	a++;
+// 	while (lst && lst->philo_num != 1)
+// 	{
+// 		lst = lst -> next;
+// 		a++;
+// 	}
+// 	return (a);
+// }

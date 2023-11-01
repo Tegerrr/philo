@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 21:31:49 by timelkon          #+#    #+#             */
-/*   Updated: 2023/10/04 20:05:06 by mac              ###   ########.fr       */
+/*   Updated: 2023/10/30 20:48:01 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,33 @@
 
 t_philo	*create_philos(char **argv, t_philo *philo)
 {
-	int				p_num;
-	int				n;
-	t_philo 		*temp;
-	struct timeval	curtime;
-	long			intime;
+	int				i;
+	long long		p_num;
 
-	n = 1;
-	philo = NULL;
-	if (gettimeofday(&curtime, NULL) == -1)
-		return (error(4), NULL);
-	intime = curtime.tv_sec * 1000;
-	p_num = ft_atoi(argv[1]);
-	if (p_num > 200)
-		return (error(2), NULL);
-	while (p_num--)
+	i = -1;
+	p_num = ft_atol(argv[1]);
+	philo = malloc(p_num * sizeof(t_philo));
+	while (++i != p_num)
 	{
-		temp = ft_calloc(1, sizeof(t_philo));
-		if (!temp)
-			return (error(3), NULL);
-		temp->fork = 1;
-		temp->philo_num = n++;
-		temp->time_die = ft_atol(argv[2]) * 1000;
-		temp->time_eat = ft_atol(argv[3]) * 1000;
-		temp->time_sleep = ft_atol(argv[4]) * 1000;
-		temp->intime = intime;
+		philo[i].p_am = ft_atol(argv[1]);
+		philo[i].p_num = i;
+		philo[i].time_die = ft_atol(argv[2]) * 1000;
+		philo[i].time_eat = ft_atol(argv[3]) * 1000;
+		philo[i].time_sleep = ft_atol(argv[4]) * 1000;
+		pthread_mutex_init(&philo[i].mutex, NULL);
 		if (argv[5])
-			temp->eat_time_num = ft_atol(argv[5]) * 1000;
+			philo[i].eat_time_num = ft_atol(argv[5]);
 		else
-			temp->eat_time_num = -1;
-		temp->next = NULL;
-		ft_lstadd_back(&philo, temp);
+			philo[i].eat_time_num = -1;
 	}
-	if (temp->philo_num != 1)
-		temp->next = philo;
 	return (philo);
 }
 
-t_philo	*parsing(char **argv, t_philo *philo)
+t_philo	*parsing(char **argv, t_philo *to_parse)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_philo	*philo;
 
 	j = 0;
 	i = 1;
@@ -69,6 +55,7 @@ t_philo	*parsing(char **argv, t_philo *philo)
 		i++;
 		j = 0;
 	}
-	philo = create_philos(argv, philo);
+	philo = create_philos(argv, to_parse);
+	i = 0;
 	return (philo);
 }
