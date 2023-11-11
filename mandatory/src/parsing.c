@@ -6,13 +6,13 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 21:31:49 by timelkon          #+#    #+#             */
-/*   Updated: 2023/10/30 20:48:01 by mac              ###   ########.fr       */
+/*   Updated: 2023/11/10 18:14:26 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_philo	*create_philos(char **argv, t_philo *philo)
+t_philo	*create_philos(char **argv, t_philo *philo, t_data *data)
 {
 	int				i;
 	long long		p_num;
@@ -24,10 +24,12 @@ t_philo	*create_philos(char **argv, t_philo *philo)
 	{
 		philo[i].p_am = ft_atol(argv[1]);
 		philo[i].p_num = i;
+		philo[i].alive = 1;
 		philo[i].time_die = ft_atol(argv[2]) * 1000;
 		philo[i].time_eat = ft_atol(argv[3]) * 1000;
 		philo[i].time_sleep = ft_atol(argv[4]) * 1000;
-		pthread_mutex_init(&philo[i].mutex, NULL);
+		philo[i].data = data;
+		pthread_mutex_init(&philo[i].flag, NULL);
 		if (argv[5])
 			philo[i].eat_time_num = ft_atol(argv[5]);
 		else
@@ -36,7 +38,7 @@ t_philo	*create_philos(char **argv, t_philo *philo)
 	return (philo);
 }
 
-t_philo	*parsing(char **argv, t_philo *to_parse)
+t_philo	*parsing(char **argv, t_philo *to_parse, t_data *data)
 {
 	int		i;
 	int		j;
@@ -55,7 +57,7 @@ t_philo	*parsing(char **argv, t_philo *to_parse)
 		i++;
 		j = 0;
 	}
-	philo = create_philos(argv, to_parse);
+	philo = create_philos(argv, to_parse, data);
 	i = 0;
 	return (philo);
 }
