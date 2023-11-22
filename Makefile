@@ -1,14 +1,14 @@
 NAME = philo
 
-SRC	= mandatory/src/error.c		mandatory/src/main.c\
+SRC	= 	mandatory/src/error.c	mandatory/src/main.c\
 		mandatory/src/philo.c	mandatory/src/parsing.c\
-		mandatory/src/utils.c
+		mandatory/src/utils.c	mandatory/src/habits.c
 
 HEADER = mandatory/src/philo.h
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread
 
 CC = cc
 
