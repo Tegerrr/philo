@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 20:26:27 by timelkon          #+#    #+#             */
-/*   Updated: 2023/11/21 12:13:26 by mac              ###   ########.fr       */
+/*   Updated: 2023/11/27 19:28:57 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,9 @@ int error(int e)
 		write (2, "gettimeofday didn't execute properly\n", 38);
 	if (e == 5)
 		write (2, "memory didn't allocate properly\n", 33);
+	if (e == 6)
+		write (2, "no philos for life ;(\n", 23);
+	if (e == 7)
+		write (2, "time args can't be lower than 60\n", 34);
 	return (1);
 }

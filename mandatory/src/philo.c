@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 21:11:56 by timelkon          #+#    #+#             */
-/*   Updated: 2023/11/22 20:38:51 by mac              ###   ########.fr       */
+/*   Updated: 2023/11/27 19:44:19 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*life_cicle(void *info)
 {
 	int			flag1;
 	t_philo		*philo;
-	long long	time;
+	// long long	time;
 
 	philo = info;
 	flag1 = 1;
@@ -32,16 +32,16 @@ void	*life_cicle(void *info)
 	{
 		// if (philo->data->dead)
 		// 	return (0);
-		time = get_time();
+		// time = get_time();
 		if (flag1)
 		{
 			if ((philo->p_ind + 1) % 2 == 0)
-				usleep(1000);
+				ft_usleep(2000);
 			flag1 = 0;
 		}
 		eating(philo);
 		sleeping(philo);
-		printf("%lldms %d is thinking\n", time - philo->data->intime, philo->p_ind + 1);
+		printf("%lldms %d is thinking\n", get_time() - philo->data->intime, philo->p_ind + 1);
 	}
 	return (0);
 }
@@ -66,14 +66,14 @@ void	*death_watch(void *info)
 			pthread_mutex_lock(&data->adlocks[i]);
 			// printf("curtime - time when ate = %lld\n", curtime - data->philo[i].time_when_ate);
 			// printf("time_die == %lld\n", data->time_die);
-			if (data->time_die / 1000 <= curtime - data->philo[i].time_when_ate)
+			if (data->time_die <= curtime - data->philo[i].time_when_ate)
 			{
 				// printf("curtime - time when ate = %lld\n", curtime - data->philo[i].time_when_ate);
 				// printf("test time when ate == %lld\n", data->philo[i].time_when_ate);
 				// printf("test mutex adress in death == %p\n", &data->adlocks[i]);
 				// printf("test philo number in death == %d\n", i);
 				printf("%lldms %d died \n", get_time() - data->intime, i + 1);
-				printf("hi 1\n");
+				// printf("hi 1\n");
 				return ((void *)(1));
 			}
 			pthread_mutex_unlock(&data->adlocks[i]);
@@ -84,7 +84,7 @@ void	*death_watch(void *info)
 				eat_count = 0;
 			if (eat_count == data->p_am)
 			{
-				printf("---philos have eaten %d times---\n", data->philo[i].ate);
+				// printf("---philos have eaten %d times---\n", data->philo[i].ate);
 				return ((void *)(2));
 			}
 		}
@@ -114,18 +114,18 @@ int	life_prep(t_data *data)
 int	philo(char	**argv, t_data *data)
 {
 	t_philo			to_parse;
-	int		i;
+	int				i;
 
 	i = -1;
 	data->philo = parsing(argv, &to_parse, data);
-	pthread_mutex_init(&data->death_watch, NULL);
-	if (!data->philo)
+	// pthread_mutex_init(&data->death_watch, NULL);
+	if (!data->philo || data->philo == NULL)
 		return (0);
 	data->dead = 0;
 	data->ind = 0;
+	data->p_am = ft_atol(argv[1]);
 	data->fork = malloc(data->p_am * sizeof(pthread_mutex_t));
 	data->adlocks = malloc(data->p_am * sizeof(pthread_mutex_t));
-	data->p_am = ft_atol(argv[1]);
 	while (i++ != data->p_am)
 	{
 		pthread_mutex_init(&data->fork[i], NULL);
@@ -134,7 +134,10 @@ int	philo(char	**argv, t_data *data)
 	life_prep(data);
 	i = -1;
 	while (++i != data->p_am)
+	{
 		pthread_mutex_destroy(&data->fork[i]);
+		pthread_mutex_destroy(&data->adlocks[i]);
+	}
 	// i = 0;
 	// while (i++ != data.p_num)
 	// {

@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:47:32 by timelkon          #+#    #+#             */
-/*   Updated: 2023/11/22 20:22:10 by mac              ###   ########.fr       */
+/*   Updated: 2023/11/27 19:09:24 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void		eating(t_philo *philo);
 void		sleeping(t_philo *philo);
 t_philo		*parsing(char **argv, t_philo *to_parse, t_data *data);
 long long	get_time(void);
+void		ft_usleep(useconds_t time);
 
 #endif

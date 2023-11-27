@@ -8,7 +8,7 @@ HEADER = mandatory/src/philo.h
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
 
 CC = cc
 
