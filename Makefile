@@ -1,14 +1,21 @@
 NAME = philo
+NAME_B = philo_bonus
 
-SRC	= 	mandatory/src/error.c	mandatory/src/main.c\
-		mandatory/src/philo.c	mandatory/src/parsing.c\
-		mandatory/src/utils.c	mandatory/src/habits.c
+SRC	= 	mandatory/error.c	mandatory/main.c\
+		mandatory/philo.c	mandatory/parsing.c\
+		mandatory/utils.c	mandatory/habits.c
 
-HEADER = mandatory/src/philo.h
+SRC_B = bonus/error.c	bonus/main.c\
+		bonus/philo.c	bonus/parsing.c\
+		bonus/utils.c	bonus/habits.c
+
+HEADER = mandatory/philo.h
+HEADER_B = bonus/philo.h
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
+OBJ_B = $(patsubst %.c, %.o, $(SRC_B))
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
 
 CC = cc
 
@@ -20,12 +27,17 @@ $(NAME) : $(OBJ) $(HEADER)
 %.o : %.c $(HEADER)
 		$(CC) $(CFLAGS) -o $@ -c $<
 
+bonus :
+		make OBJ="$(OBJ_B)" HEADER="$(HEADER_B)" NAME="$(NAME_B)" all
+
 clean :
-		rm -f $(OBJ)
+		rm -f $(OBJ) $(OBJ_B)
 
 fclean : clean
 		$(RM) $(NAME)
 
 re : fclean all
 
-.PHONY : all clean fclean re
+rb : fclean bonus
+
+.PHONY : all clean fclean re bonus rb

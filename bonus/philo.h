@@ -6,18 +6,18 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:47:32 by timelkon          #+#    #+#             */
-/*   Updated: 2023/11/27 19:09:24 by mac              ###   ########.fr       */
+/*   Updated: 2023/12/05 20:46:17 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <sys/time.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <sys/time.h>
 
 typedef struct s_philo
 {
@@ -43,9 +43,9 @@ typedef struct s_data
 	long long		time_eat;
 	long long		time_sleep;
 	long long		eat_time_num;
+	pthread_mutex_t	write;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	death_watch;
-	pthread_mutex_t *adlocks;
+	pthread_mutex_t	*adlocks;
 	t_philo			*philo;
 }	t_data;
 
@@ -61,6 +61,7 @@ void		eating(t_philo *philo);
 void		sleeping(t_philo *philo);
 t_philo		*parsing(char **argv, t_philo *to_parse, t_data *data);
 long long	get_time(void);
-void		ft_usleep(useconds_t time);
+void		ft_usleep(useconds_t time, t_philo *philo);
+void		safeprint(t_data *data, long long time, int p_ind, char *str);
 
 #endif

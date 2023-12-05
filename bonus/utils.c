@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 18:46:37 by mac               #+#    #+#             */
-/*   Updated: 2023/11/27 18:58:08 by mac              ###   ########.fr       */
+/*   Updated: 2023/12/05 20:47:47 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,6 @@ long long	ft_atol(const char *str)
 	}
 	return (znak * res);
 }
-
-// void	ft_lstadd_back(t_philo **lst, t_philo *new)
-// {
-// 	t_philo	*a;
-
-// 	a = (*lst);
-// 	if (lst)
-// 	{
-// 		if (*lst == NULL)
-// 		{
-// 			*lst = new;
-// 			(*lst)->next = NULL;
-// 			return ;
-// 		}
-// 		while (a -> next != NULL)
-// 			a = a -> next;
-// 		a -> next = new;
-// 	}
-// }
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -94,18 +75,18 @@ void	ft_bzero(void *s, size_t n)
 	return ;
 }
 
-// int	ft_lstsize(t_philo *lst)
+long long	get_time(void)
+{
+	struct timeval	get;
 
-// {
-// 	int	a;
+	gettimeofday(&get, NULL);
+	return (get.tv_sec * 1000 + get.tv_usec / 1000);
+}
 
-// 	a = 0;
-// 	lst = lst -> next;
-// 	a++;
-// 	while (lst && lst->philo_num != 1)
-// 	{
-// 		lst = lst -> next;
-// 		a++;
-// 	}
-// 	return (a);
-// }
+void	safeprint(t_data *data, long long time, int p_ind, char *str)
+{
+	pthread_mutex_lock(&data->write);
+	if (!data->dead)
+		printf("%lldms %d %s", time, p_ind, str);
+	pthread_mutex_unlock(&data->write);
+}

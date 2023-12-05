@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 19:39:26 by mac               #+#    #+#             */
-/*   Updated: 2023/11/27 19:08:07 by mac              ###   ########.fr       */
+/*   Updated: 2023/12/05 20:54:57 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,18 @@
 
 void	eating(t_philo *philo)
 {
-	// long long	time;
-
-	// pthread_mutex_lock(&philo->data->adlocks[philo->p_ind]);
-	// time = get_time() - philo->data->intime;
-	// pthread_mutex_unlock(&philo->data->adlocks[philo->p_ind]);
 	pthread_mutex_lock(&philo->data->fork[philo->p_ind]);
-	printf("%lldms %d has taken a fork\n", get_time() - philo->data->intime, philo->p_ind + 1);
+	safeprint(philo->data, get_time() - philo->data->intime,
+		philo->p_ind + 1, "has taken a fork\n");
 	pthread_mutex_lock(&philo->data->fork[(philo->p_ind + 1) % philo->p_am]);
-	printf("%lldms %d has taken a fork\n", get_time() - philo->data->intime, philo->p_ind + 1);
-	printf("%lldms %d is eating\n", get_time() - philo->data->intime, philo->p_ind + 1);
-	ft_usleep(philo->time_eat * 1000);
+	safeprint(philo->data, get_time() - philo->data->intime,
+		philo->p_ind + 1, "has taken a fork\n");
+	safeprint(philo->data, get_time() - philo->data->intime,
+		philo->p_ind + 1, "is eating\n");
+	ft_usleep(philo->time_eat * 1000, philo);
 	pthread_mutex_lock(&philo->data->adlocks[philo->p_ind]);
-		// printf("test philo number in eating == %d\n", philo->p_ind);
-		// printf("test mutex adress in eating == %p\n", &philo->data->adlocks[philo->p_ind]);
 	philo->time_when_ate = get_time();
 	philo->ate++;
-	// printf("time == %lld\n", get_time());
 	pthread_mutex_unlock(&philo->data->adlocks[philo->p_ind]);
 	pthread_mutex_unlock(&philo->data->fork[philo->p_ind]);
 	pthread_mutex_unlock(&philo->data->fork[(philo->p_ind + 1) % philo->p_am]);
@@ -38,19 +33,18 @@ void	eating(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-	// long long	time;
-
-	// time = get_time();
-	printf("%lldms %d is sleeping\n", get_time() - philo->data->intime, philo->p_ind + 1);
-	ft_usleep(philo->time_sleep * 1000);
+	safeprint(philo->data, get_time() - philo->data->intime,
+		philo->p_ind + 1, "if sleeping\n");
+	ft_usleep(philo->time_sleep * 1000, philo);
 }
 
-void	ft_usleep(useconds_t time)
+void	ft_usleep(useconds_t time, t_philo *philo)
 {
 	long long	stime;
 
-	time /= 1000;
+	if (philo)
+		time /= 1000;
 	stime = get_time();
 	while (get_time() - stime < time)
-		usleep(time / 10);
+		usleep(50);
 }
