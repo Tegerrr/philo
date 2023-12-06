@@ -85,8 +85,9 @@ long long	get_time(void)
 
 void	safeprint(t_data *data, long long time, int p_ind, char *str)
 {
-	pthread_mutex_lock(&data->write);
-	if (!data->dead)
+	printf("dead == %d\n", data->dead);
+	if (data->dead == 0)
+	{
 		printf("%lldms %d %s", time, p_ind, str);
-	pthread_mutex_unlock(&data->write);
+	}
 }

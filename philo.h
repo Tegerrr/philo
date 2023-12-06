@@ -23,7 +23,6 @@ typedef struct s_philo
 {
 	int				p_am;
 	int				p_ind;
-	int				alive;
 	long long		time_when_ate;
 	long long		time_die;
 	long long		time_eat;

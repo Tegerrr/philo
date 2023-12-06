@@ -23,24 +23,25 @@ void	*life_cicle(void *info)
 	{
 		eating(philo);
 		sleeping(philo);
+		pthread_mutex_lock(&philo->data->write);
 		safeprint(philo->data, get_time() - philo->data->intime,
 			philo->p_ind + 1, "is thinking\n");
+		pthread_mutex_unlock(&philo->data->write);
 	}
 	return (0);
 }
 
 int	death_watch_1(t_data *data, int i)
 {
-	pthread_mutex_lock(&data->adlocks[i]);
+	pthread_mutex_lock(&data->write);
 	if (data->time_die <= get_time() - data->philo[i].time_when_ate)
 	{
-		pthread_mutex_lock(&data->write);
-		printf("%lldms %d died \n", get_time() - data->intime, i + 1);
-		pthread_mutex_unlock(&data->write);
+		printf("%lldms %d died\n", get_time() - data->intime, i + 1);
 		data->dead = 1;
+		pthread_mutex_unlock(&data->write);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->adlocks[i]);
+	pthread_mutex_unlock(&data->write);
 	return (0);
 }
 
@@ -70,7 +71,6 @@ void	*death_watch(void *info)
 				return ((void *)(2));
 		}
 	}
-	printf("exit 0\n");
 	return ((void *)(0));
 }
 
@@ -85,7 +85,6 @@ int	life_prep(t_data *data)
 	pthread_create(&th_death, NULL, death_watch, (void *)data);
 	while (++i < data->p_am)
 		pthread_create(&th[i], NULL, life_cicle, &(data->philo[i]));
-	i = -1;
 	pthread_join(th_death, NULL);
 	return (1);
 }
@@ -109,12 +108,12 @@ int	philo(char	**argv, t_data *data)
 	}
 	pthread_mutex_init(&data->write, NULL);
 	life_prep(data);
-	i = -1;
-	while (++i != data->p_am)
-	{
-		pthread_mutex_destroy(&data->fork[i]);
-		pthread_mutex_destroy(&data->adlocks[i]);
-	}
-	pthread_mutex_destroy(&data->write);
+	// i = -1;
+	// while (++i != data->p_am)
+	// {
+	// 	pthread_mutex_destroy(&data->fork[i]);
+	// 	pthread_mutex_destroy(&data->adlocks[i]);
+	// }
+	// pthread_mutex_destroy(&data->write);
 	return (0);
 }

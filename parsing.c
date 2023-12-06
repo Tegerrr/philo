@@ -16,7 +16,6 @@ void	create_philos_1(char **argv, t_philo *philo, t_data *data, int i)
 {
 	philo[i].p_am = ft_atol(argv[1]);
 	philo[i].p_ind = i;
-	philo[i].alive = 1;
 	philo[i].time_die = ft_atol(argv[2]);
 	philo[i].time_eat = ft_atol(argv[3]);
 	philo[i].time_sleep = ft_atol(argv[4]);
