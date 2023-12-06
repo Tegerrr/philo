@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 19:39:26 by mac               #+#    #+#             */
-/*   Updated: 2023/12/05 20:54:57 by mac              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:57:26 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	eating(t_philo *philo)
 	pthread_mutex_lock(&philo->data->adlocks[philo->p_ind]);
 	philo->time_when_ate = get_time();
 	philo->ate++;
-	pthread_mutex_unlock(&philo->data->adlocks[philo->p_ind]);
 	pthread_mutex_unlock(&philo->data->fork[philo->p_ind]);
+	pthread_mutex_unlock(&philo->data->adlocks[philo->p_ind]);
 	pthread_mutex_unlock(&philo->data->fork[(philo->p_ind + 1) % philo->p_am]);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 20:26:27 by timelkon          #+#    #+#             */
-/*   Updated: 2023/12/05 21:27:18 by mac              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:25:01 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ int	error(int e)
 		write (2, "too many philos\n", 17);
 	if (e == 9)
 		write (2, "args too big\n", 14);
+	if (e == 10)
+		write (2, "empty args\n", 12);
 	return (1);
 }

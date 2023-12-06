@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 21:11:56 by timelkon          #+#    #+#             */
-/*   Updated: 2023/12/05 20:57:20 by mac              ###   ########.fr       */
+/*   Updated: 2023/12/06 15:56:29 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ void	*death_watch(void *info)
 		{
 			if (death_watch_1(data, i) == 1)
 				return ((void *)(1));
+			pthread_mutex_lock(&data->adlocks[i]);
 			if (data->eat_time_num >= 0
 				&& data->philo[i].ate >= data->eat_time_num)
 				eat_count++;
 			else
 				eat_count = 0;
+			pthread_mutex_unlock(&data->adlocks[i]);
 			if (eat_count == data->p_am)
 				return ((void *)(2));
 		}
